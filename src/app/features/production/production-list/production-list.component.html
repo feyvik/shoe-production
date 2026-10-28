@@ -1,0 +1,84 @@
+<div class="space-y-6">
+  <div class="flex items-center justify-between flex-wrap gap-3">
+    <div>
+      <h1 class="text-2xl font-bold text-slate-800">Production Batches</h1>
+      <p class="text-slate-500 text-sm">Track and manage shoe production</p>
+    </div>
+    @if (auth.currentUser()?.role !== 'storekeeper') {
+      <a routerLink="/production/new"
+        class="bg-amber-500 hover:bg-amber-600 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors">
+        + New Batch
+      </a>
+    }
+  </div>
+
+  <!-- Filters -->
+  <div class="flex gap-3 flex-wrap">
+    <input [(ngModel)]="search" (ngModelChange)="load()" placeholder="Search batch number..."
+      class="border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-amber-500 w-56" />
+    <select [(ngModel)]="statusFilter" (ngModelChange)="load()"
+      class="border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-amber-500">
+      <option value="">All statuses</option>
+      @for (s of statuses; track s) {
+        <option [value]="s">{{ s | titlecase }}</option>
+      }
+    </select>
+  </div>
+
+  @if (loading()) {
+    <div class="text-slate-400 text-sm">Loading...</div>
+  } @else {
+    <div class="bg-white rounded-xl shadow-sm overflow-hidden">
+      <table class="w-full text-sm">
+        <thead class="bg-slate-50 border-b border-slate-200">
+          <tr>
+            <th class="text-left px-6 py-3 font-semibold text-slate-600">Batch #</th>
+            <th class="text-left px-6 py-3 font-semibold text-slate-600">Shoe Model</th>
+            <th class="text-left px-6 py-3 font-semibold text-slate-600">Qty (pairs)</th>
+            <th class="text-left px-6 py-3 font-semibold text-slate-600">Status</th>
+            <th class="text-left px-6 py-3 font-semibold text-slate-600">Date</th>
+            <th class="text-left px-6 py-3 font-semibold text-slate-600">Actions</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-slate-100">
+          @if (batches().length === 0) {
+            <tr><td colspan="6" class="px-6 py-10 text-center text-slate-400">No batches found.</td></tr>
+          }
+          @for (batch of batches(); track batch.id) {
+            <tr class="hover:bg-slate-50">
+              <td class="px-6 py-3 font-mono font-medium text-slate-800">{{ batch.batch_number }}</td>
+              <td class="px-6 py-3 text-slate-700">{{ batch.shoe_model }}</td>
+              <td class="px-6 py-3 text-slate-700">{{ batch.quantity }}</td>
+              <td class="px-6 py-3">
+                <span class="px-2.5 py-1 rounded-full text-xs font-medium {{ statusClass(batch.status) }}">
+                  {{ batch.status }}
+                </span>
+              </td>
+              <td class="px-6 py-3 text-slate-500">{{ batch.created_at | date:'mediumDate' }}</td>
+              <td class="px-6 py-3">
+                <div class="flex items-center gap-2">
+                  @if (canAdvance(batch.status) && auth.currentUser()?.role !== 'storekeeper') {
+                    <button (click)="advanceStatus(batch)"
+                      class="text-xs bg-blue-50 hover:bg-blue-100 text-blue-700 px-2 py-1 rounded transition-colors">
+                      Advance →
+                    </button>
+                  }
+                  <a [routerLink]="['/production', batch.id, 'edit']"
+                    class="text-xs text-slate-500 hover:text-slate-700 px-2 py-1 rounded hover:bg-slate-100 transition-colors">
+                    Edit
+                  </a>
+                  @if (auth.currentUser()?.role === 'admin') {
+                    <button (click)="deleteBatch(batch.id)"
+                      class="text-xs text-red-500 hover:text-red-700 px-2 py-1 rounded hover:bg-red-50 transition-colors">
+                      Delete
+                    </button>
+                  }
+                </div>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+</div>

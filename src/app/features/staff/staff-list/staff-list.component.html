@@ -1,0 +1,74 @@
+<div class="space-y-6">
+  <div class="flex items-center justify-between flex-wrap gap-3">
+    <div>
+      <h1 class="text-2xl font-bold text-slate-800">Staff / Workers</h1>
+      <p class="text-slate-500 text-sm">Manage production floor workers</p>
+    </div>
+    <a routerLink="/staff/new"
+      class="bg-amber-500 hover:bg-amber-600 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors">
+      + Add Staff
+    </a>
+  </div>
+
+  <input [(ngModel)]="search" (ngModelChange)="load()" placeholder="Search by name..."
+    class="border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-amber-500 w-64" />
+
+  @if (loading()) {
+    <div class="text-slate-400 text-sm">Loading...</div>
+  } @else {
+    <div class="bg-white rounded-xl shadow-sm overflow-hidden">
+      <table class="w-full text-sm">
+        <thead class="bg-slate-50 border-b border-slate-200">
+          <tr>
+            <th class="text-left px-6 py-3 font-semibold text-slate-600">Name</th>
+            <th class="text-left px-6 py-3 font-semibold text-slate-600">Role</th>
+            <th class="text-left px-6 py-3 font-semibold text-slate-600">Department</th>
+            <th class="text-left px-6 py-3 font-semibold text-slate-600">Phone</th>
+            <th class="text-left px-6 py-3 font-semibold text-slate-600">Status</th>
+            <th class="text-left px-6 py-3 font-semibold text-slate-600">Actions</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-slate-100">
+          @if (staff().length === 0) {
+            <tr><td colspan="6" class="px-6 py-10 text-center text-slate-400">No staff found.</td></tr>
+          }
+          @for (s of staff(); track s.id) {
+            <tr class="hover:bg-slate-50">
+              <td class="px-6 py-3">
+                <div class="flex items-center gap-3">
+                  <div class="w-8 h-8 bg-slate-200 rounded-full flex items-center justify-center text-xs font-bold text-slate-600">
+                    {{ s.full_name?.charAt(0) }}
+                  </div>
+                  <span class="font-medium text-slate-800">{{ s.full_name }}</span>
+                </div>
+              </td>
+              <td class="px-6 py-3 text-slate-600">{{ s.role }}</td>
+              <td class="px-6 py-3 text-slate-500">{{ s.department }}</td>
+              <td class="px-6 py-3 text-slate-500">{{ s.phone }}</td>
+              <td class="px-6 py-3">
+                <span class="px-2.5 py-1 rounded-full text-xs font-medium"
+                  [class]="s.is_active ? 'bg-green-100 text-green-700' : 'bg-slate-100 text-slate-500'">
+                  {{ s.is_active ? 'Active' : 'Inactive' }}
+                </span>
+              </td>
+              <td class="px-6 py-3">
+                <div class="flex gap-2">
+                  <button (click)="toggleActive(s)"
+                    class="text-xs text-slate-500 hover:text-slate-700 px-2 py-1 rounded hover:bg-slate-100 transition-colors">
+                    {{ s.is_active ? 'Deactivate' : 'Activate' }}
+                  </button>
+                  <a [routerLink]="['/staff', s.id, 'edit']"
+                    class="text-xs text-slate-500 hover:text-slate-700 px-2 py-1 rounded hover:bg-slate-100 transition-colors">Edit</a>
+                  @if (auth.currentUser()?.role === 'admin') {
+                    <button (click)="delete(s.id)"
+                      class="text-xs text-red-500 hover:text-red-700 px-2 py-1 rounded hover:bg-red-50 transition-colors">Delete</button>
+                  }
+                </div>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+</div>

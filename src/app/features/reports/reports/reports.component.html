@@ -1,0 +1,87 @@
+<div class="space-y-6">
+  <div class="flex items-center justify-between flex-wrap gap-3">
+    <div>
+      <h1 class="text-2xl font-bold text-slate-800">Reports</h1>
+      <p class="text-slate-500 text-sm">Production analytics and summaries</p>
+    </div>
+    <div class="flex gap-2">
+      @for (p of ['daily','weekly','monthly']; track p) {
+        <button (click)="period = $any(p); load()"
+          [class]="period === p ? 'bg-amber-500 text-white' : 'bg-white text-slate-600 border border-slate-300 hover:border-slate-400'"
+          class="px-4 py-2 rounded-lg text-sm font-medium transition-colors capitalize">
+          {{ p }}
+        </button>
+      }
+    </div>
+  </div>
+
+  @if (loading()) {
+    <div class="text-slate-400 text-sm">Loading report...</div>
+  } @else {
+    <!-- Summary Cards -->
+    <div class="grid grid-cols-2 xl:grid-cols-4 gap-4">
+      <div class="bg-white rounded-xl shadow-sm p-5">
+        <div class="text-3xl font-bold text-slate-800">{{ summary().totalBatches }}</div>
+        <div class="text-sm text-slate-500 mt-1">Total Batches</div>
+      </div>
+      <div class="bg-white rounded-xl shadow-sm p-5">
+        <div class="text-3xl font-bold text-slate-800">{{ summary().totalPairs.toLocaleString() }}</div>
+        <div class="text-sm text-slate-500 mt-1">Pairs Processed</div>
+      </div>
+      <div class="bg-white rounded-xl shadow-sm p-5">
+        <div class="text-3xl font-bold text-green-600">{{ summary().packaged }}</div>
+        <div class="text-sm text-slate-500 mt-1">Packaged</div>
+      </div>
+      <div class="bg-white rounded-xl shadow-sm p-5">
+        <div class="text-3xl font-bold text-blue-600">{{ summary().inProgress }}</div>
+        <div class="text-sm text-slate-500 mt-1">In Progress</div>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 xl:grid-cols-2 gap-6">
+      <!-- Status Breakdown -->
+      <div class="bg-white rounded-xl shadow-sm p-6">
+        <h2 class="font-semibold text-slate-800 mb-4">Production by Stage</h2>
+        @if (statusBreakdown().length === 0) {
+          <p class="text-slate-400 text-sm">No data for this period.</p>
+        }
+        <div class="space-y-3">
+          @for (item of statusBreakdown(); track item.status) {
+            <div>
+              <div class="flex justify-between text-sm mb-1">
+                <span class="capitalize font-medium text-slate-700">{{ item.status }}</span>
+                <span class="text-slate-500">{{ item.count }} batches · {{ item.pairs }} pairs</span>
+              </div>
+              <div class="h-2 bg-slate-100 rounded-full overflow-hidden">
+                <div class="h-full bg-amber-400 rounded-full"
+                  [style.width]="barWidth(item.count, summary().totalBatches)"></div>
+              </div>
+            </div>
+          }
+        </div>
+      </div>
+
+      <!-- Top Workers -->
+      <div class="bg-white rounded-xl shadow-sm p-6">
+        <h2 class="font-semibold text-slate-800 mb-4">Top Workers by Output</h2>
+        @if (topWorkers().length === 0) {
+          <p class="text-slate-400 text-sm">No worker data for this period.</p>
+        }
+        <div class="space-y-3">
+          @for (w of topWorkers(); track w.id) {
+            <div>
+              <div class="flex justify-between text-sm mb-1">
+                <span class="font-medium text-slate-700">{{ w.full_name }}</span>
+                <span class="text-slate-500">{{ w.pairs }} pairs</span>
+              </div>
+              <div class="h-2 bg-slate-100 rounded-full overflow-hidden">
+                <div class="h-full bg-emerald-400 rounded-full"
+                  [style.width]="barWidth(w.pairs, maxPairs())"></div>
+              </div>
+            </div>
+          }
+        </div>
+      </div>
+    </div>
+  }
+</div>

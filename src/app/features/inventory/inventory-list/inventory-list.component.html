@@ -1,0 +1,68 @@
+<div class="space-y-6">
+  <div class="flex items-center justify-between flex-wrap gap-3">
+    <div>
+      <h1 class="text-2xl font-bold text-slate-800">Raw Materials Inventory</h1>
+      <p class="text-slate-500 text-sm">Track stock levels and usage</p>
+    </div>
+    <a routerLink="/inventory/new"
+      class="bg-amber-500 hover:bg-amber-600 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors">
+      + Add Material
+    </a>
+  </div>
+
+  <input [(ngModel)]="search" (ngModelChange)="load()" placeholder="Search materials..."
+    class="border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-amber-500 w-64" />
+
+  @if (loading()) {
+    <div class="text-slate-400 text-sm">Loading...</div>
+  } @else {
+    <div class="bg-white rounded-xl shadow-sm overflow-hidden">
+      <table class="w-full text-sm">
+        <thead class="bg-slate-50 border-b border-slate-200">
+          <tr>
+            <th class="text-left px-6 py-3 font-semibold text-slate-600">Material</th>
+            <th class="text-left px-6 py-3 font-semibold text-slate-600">Category</th>
+            <th class="text-left px-6 py-3 font-semibold text-slate-600">In Stock</th>
+            <th class="text-left px-6 py-3 font-semibold text-slate-600">Reorder At</th>
+            <th class="text-left px-6 py-3 font-semibold text-slate-600">Unit</th>
+            <th class="text-left px-6 py-3 font-semibold text-slate-600">Status</th>
+            <th class="text-left px-6 py-3 font-semibold text-slate-600">Actions</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-slate-100">
+          @if (materials().length === 0) {
+            <tr><td colspan="7" class="px-6 py-10 text-center text-slate-400">No materials found.</td></tr>
+          }
+          @for (m of materials(); track m.id) {
+            <tr class="hover:bg-slate-50">
+              <td class="px-6 py-3 font-medium text-slate-800">{{ m.name }}</td>
+              <td class="px-6 py-3 text-slate-500">{{ m.category }}</td>
+              <td class="px-6 py-3 font-semibold" [class.text-red-600]="isLowStock(m)" [class.text-slate-800]="!isLowStock(m)">
+                {{ m.quantity }}
+              </td>
+              <td class="px-6 py-3 text-slate-500">{{ m.reorder_level }}</td>
+              <td class="px-6 py-3 text-slate-500">{{ m.unit }}</td>
+              <td class="px-6 py-3">
+                @if (isLowStock(m)) {
+                  <span class="px-2.5 py-1 rounded-full text-xs font-medium bg-red-100 text-red-700">Low Stock</span>
+                } @else {
+                  <span class="px-2.5 py-1 rounded-full text-xs font-medium bg-green-100 text-green-700">OK</span>
+                }
+              </td>
+              <td class="px-6 py-3">
+                <div class="flex gap-2">
+                  <a [routerLink]="['/inventory', m.id, 'edit']"
+                    class="text-xs text-slate-500 hover:text-slate-700 px-2 py-1 rounded hover:bg-slate-100 transition-colors">Edit</a>
+                  @if (auth.currentUser()?.role === 'admin') {
+                    <button (click)="delete(m.id)"
+                      class="text-xs text-red-500 hover:text-red-700 px-2 py-1 rounded hover:bg-red-50 transition-colors">Delete</button>
+                  }
+                </div>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+</div>

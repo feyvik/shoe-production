@@ -1,0 +1,77 @@
+<div class="max-w-2xl space-y-6">
+  <div class="flex items-center gap-3">
+    <a routerLink="/staff" class="text-slate-400 hover:text-slate-600">
+      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+      </svg>
+    </a>
+    <h1 class="text-2xl font-bold text-slate-800">{{ isEdit ? 'Edit Staff' : 'Add Staff Member' }}</h1>
+  </div>
+
+  <form (ngSubmit)="save()" class="bg-white rounded-xl shadow-sm p-6 space-y-4">
+    <div class="grid grid-cols-2 gap-4">
+      <div>
+        <label class="block text-sm font-medium text-slate-700 mb-1">Full Name</label>
+        <input [(ngModel)]="form.full_name" name="full_name" required
+          class="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-amber-500" />
+      </div>
+      <div>
+        <label class="block text-sm font-medium text-slate-700 mb-1">Phone</label>
+        <input [(ngModel)]="form.phone" name="phone"
+          class="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-amber-500" />
+      </div>
+    </div>
+
+    <div class="grid grid-cols-2 gap-4">
+      <div>
+        <label class="block text-sm font-medium text-slate-700 mb-1">Role</label>
+        <select [(ngModel)]="form.role" name="role"
+          class="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-amber-500">
+          <option value="">-- Select role --</option>
+          @for (r of roles; track r) { <option [value]="r">{{ r }}</option> }
+        </select>
+      </div>
+      <div>
+        <label class="block text-sm font-medium text-slate-700 mb-1">Department</label>
+        <select [(ngModel)]="form.department" name="department"
+          class="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-amber-500">
+          <option value="">-- Select dept --</option>
+          @for (d of departments; track d) { <option [value]="d">{{ d }}</option> }
+        </select>
+      </div>
+    </div>
+
+    <div>
+      <label class="block text-sm font-medium text-slate-700 mb-1">Email (optional)</label>
+      <input type="email" [(ngModel)]="form.email" name="email"
+        class="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-amber-500" />
+    </div>
+
+    <div class="flex items-center gap-2">
+      <input type="checkbox" [(ngModel)]="form.is_active" name="is_active" id="is_active"
+        class="rounded border-slate-300 text-amber-500" />
+      <label for="is_active" class="text-sm text-slate-700">Active (currently on production floor)</label>
+    </div>
+
+    <div>
+      <label class="block text-sm font-medium text-slate-700 mb-1">Notes</label>
+      <textarea [(ngModel)]="form.notes" name="notes" rows="2"
+        class="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-amber-500 resize-none"></textarea>
+    </div>
+
+    @if (error) {
+      <p class="text-red-500 text-sm bg-red-50 rounded-lg px-3 py-2">{{ error }}</p>
+    }
+
+    <div class="flex gap-3 pt-2">
+      <button type="submit" [disabled]="loading()"
+        class="bg-amber-500 hover:bg-amber-600 disabled:opacity-50 text-white font-medium px-6 py-2.5 rounded-lg transition-colors text-sm">
+        {{ loading() ? 'Saving...' : (isEdit ? 'Update Staff' : 'Add Staff') }}
+      </button>
+      <a routerLink="/staff"
+        class="text-slate-600 font-medium px-6 py-2.5 rounded-lg border border-slate-300 hover:border-slate-400 transition-colors text-sm">
+        Cancel
+      </a>
+    </div>
+  </form>
+</div>
