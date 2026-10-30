@@ -1,6 +1,7 @@
 import { Routes } from '@angular/router';
 import { authGuard } from './core/auth.guard';
 import { LoginComponent } from './features/auth/login/login.component';
+import { LandingComponent } from './features/landing/landing.component';
 import { MainLayoutComponent } from './layouts/main-layout/main-layout.component';
 import { DashboardComponent } from './features/dashboard/dashboard.component';
 import { ProductionListComponent } from './features/production/production-list/production-list.component';
@@ -12,9 +13,10 @@ import { StaffFormComponent } from './features/staff/staff-form/staff-form.compo
 import { ReportsComponent } from './features/reports/reports/reports.component';
 
 export const routes: Routes = [
+  { path: '', component: LandingComponent },
   { path: 'login', component: LoginComponent },
   {
-    path: '',
+    path: 'app',
     component: MainLayoutComponent,
     canActivate: [authGuard],
     children: [

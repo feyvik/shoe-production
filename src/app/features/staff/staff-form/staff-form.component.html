@@ -1,6 +1,6 @@
 <div class="max-w-2xl space-y-6">
   <div class="flex items-center gap-3">
-    <a routerLink="/staff" class="text-slate-400 hover:text-slate-600">
+    <a routerLink="/app/staff" class="text-slate-400 hover:text-slate-600">
       <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
       </svg>
@@ -68,7 +68,7 @@
         class="bg-amber-500 hover:bg-amber-600 disabled:opacity-50 text-white font-medium px-6 py-2.5 rounded-lg transition-colors text-sm">
         {{ loading() ? 'Saving...' : (isEdit ? 'Update Staff' : 'Add Staff') }}
       </button>
-      <a routerLink="/staff"
+      <a routerLink="/app/staff"
         class="text-slate-600 font-medium px-6 py-2.5 rounded-lg border border-slate-300 hover:border-slate-400 transition-colors text-sm">
         Cancel
       </a>

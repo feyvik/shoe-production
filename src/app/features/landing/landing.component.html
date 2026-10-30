@@ -1,0 +1,232 @@
+<div class="min-h-screen bg-white font-sans">
+
+  <!-- NAV -->
+  <nav class="fixed top-0 left-0 right-0 z-50 bg-white/90 backdrop-blur border-b border-slate-100">
+    <div class="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
+      <div class="flex items-center gap-2.5">
+        <div class="w-8 h-8 bg-amber-500 rounded-lg flex items-center justify-center">
+          <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/>
+          </svg>
+        </div>
+        <span class="font-bold text-slate-800 text-lg">ShoePro</span>
+      </div>
+      <div class="hidden md:flex items-center gap-8 text-sm font-medium text-slate-600">
+        <a href="#features" class="hover:text-slate-900 transition-colors">Features</a>
+        <a href="#how-it-works" class="hover:text-slate-900 transition-colors">How It Works</a>
+        <a href="#modules" class="hover:text-slate-900 transition-colors">Modules</a>
+      </div>
+      <a routerLink="/login"
+        class="bg-amber-500 hover:bg-amber-600 text-white text-sm font-semibold px-5 py-2 rounded-lg transition-colors">
+        Sign In →
+      </a>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="pt-32 pb-20 px-6 bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 text-white">
+    <div class="max-w-4xl mx-auto text-center">
+      <span class="inline-block bg-amber-500/20 text-amber-400 text-xs font-semibold px-3 py-1 rounded-full mb-6 tracking-wider uppercase">
+        Shoe Production Management System
+      </span>
+      <h1 class="text-5xl font-extrabold leading-tight mb-6">
+        Run Your Shoe Factory<br/>
+        <span class="text-amber-400">From One Dashboard</span>
+      </h1>
+      <p class="text-slate-300 text-xl max-w-2xl mx-auto mb-10 leading-relaxed">
+        Track every production batch from raw materials to packaged pairs. Manage staff, monitor inventory, and generate reports — all in one organised system.
+      </p>
+      <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+        <a routerLink="/login"
+          class="bg-amber-500 hover:bg-amber-400 text-white font-bold px-8 py-3.5 rounded-xl text-lg transition-colors shadow-lg shadow-amber-500/30">
+          Get Started
+        </a>
+        <a href="#how-it-works"
+          class="border border-slate-600 hover:border-slate-400 text-slate-300 hover:text-white font-medium px-8 py-3.5 rounded-xl text-lg transition-colors">
+          See How It Works
+        </a>
+      </div>
+    </div>
+
+    <!-- Stage pipeline preview -->
+    <div class="max-w-3xl mx-auto mt-16 flex items-center justify-center gap-1 flex-wrap">
+      @for (stage of stages; track stage.label; let last = $last) {
+        <div class="flex items-center gap-1">
+          <div class="flex flex-col items-center">
+            <div class="w-3 h-3 rounded-full {{ stage.color }}"></div>
+            <span class="text-xs text-slate-400 mt-1">{{ stage.label }}</span>
+          </div>
+          @if (!last) {
+            <div class="w-8 h-px bg-slate-600 mb-3"></div>
+          }
+        </div>
+      }
+    </div>
+  </section>
+
+  <!-- STATS BAND -->
+  <section class="bg-amber-500 py-12 px-6">
+    <div class="max-w-4xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+      <div>
+        <div class="text-4xl font-extrabold text-white">5</div>
+        <div class="text-amber-100 text-sm mt-1">Production Stages</div>
+      </div>
+      <div>
+        <div class="text-4xl font-extrabold text-white">3</div>
+        <div class="text-amber-100 text-sm mt-1">User Roles</div>
+      </div>
+      <div>
+        <div class="text-4xl font-extrabold text-white">∞</div>
+        <div class="text-amber-100 text-sm mt-1">Batches to Track</div>
+      </div>
+      <div>
+        <div class="text-4xl font-extrabold text-white">Live</div>
+        <div class="text-amber-100 text-sm mt-1">Real-time Data</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURES -->
+  <section id="features" class="py-24 px-6 bg-slate-50">
+    <div class="max-w-6xl mx-auto">
+      <div class="text-center mb-16">
+        <h2 class="text-4xl font-extrabold text-slate-800 mb-4">Everything You Need</h2>
+        <p class="text-slate-500 text-lg max-w-xl mx-auto">
+          Built specifically for shoe manufacturers — every module maps to how your factory actually works.
+        </p>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        @for (f of features; track f.title) {
+          <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-100 hover:shadow-md transition-shadow">
+            <div class="w-11 h-11 bg-amber-50 rounded-xl flex items-center justify-center mb-4">
+              @switch (f.icon) {
+                @case ('production') {
+                  <svg class="w-5 h-5 text-amber-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>
+                }
+                @case ('inventory') {
+                  <svg class="w-5 h-5 text-amber-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4"/></svg>
+                }
+                @case ('staff') {
+                  <svg class="w-5 h-5 text-amber-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                }
+                @case ('reports') {
+                  <svg class="w-5 h-5 text-amber-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
+                }
+                @case ('roles') {
+                  <svg class="w-5 h-5 text-amber-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+                }
+                @case ('realtime') {
+                  <svg class="w-5 h-5 text-amber-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+                }
+              }
+            </div>
+            <h3 class="font-bold text-slate-800 mb-2">{{ f.title }}</h3>
+            <p class="text-slate-500 text-sm leading-relaxed">{{ f.desc }}</p>
+          </div>
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS -->
+  <section id="how-it-works" class="py-24 px-6 bg-white">
+    <div class="max-w-4xl mx-auto">
+      <div class="text-center mb-16">
+        <h2 class="text-4xl font-extrabold text-slate-800 mb-4">The Production Flow</h2>
+        <p class="text-slate-500 text-lg">Every batch moves through 5 clearly defined stages. Advance it with one click.</p>
+      </div>
+      <div class="relative">
+        <div class="absolute left-6 top-0 bottom-0 w-0.5 bg-slate-100"></div>
+        <div class="space-y-8">
+          @for (stage of stages; track stage.label; let i = $index) {
+            <div class="flex gap-6 relative">
+              <div class="w-12 h-12 rounded-full {{ stage.color }} flex items-center justify-center text-white font-bold text-lg shrink-0 z-10 shadow-md">
+                {{ i + 1 }}
+              </div>
+              <div class="bg-slate-50 rounded-xl p-5 flex-1 border border-slate-100">
+                <h3 class="font-bold text-slate-800 mb-1">{{ stage.label }}</h3>
+                <p class="text-slate-500 text-sm">{{ stage.desc }}</p>
+              </div>
+            </div>
+          }
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MODULES -->
+  <section id="modules" class="py-24 px-6 bg-slate-900 text-white">
+    <div class="max-w-5xl mx-auto">
+      <div class="text-center mb-16">
+        <h2 class="text-4xl font-extrabold mb-4">Built for Every Role</h2>
+        <p class="text-slate-400 text-lg">Three access levels — each person sees exactly what they need.</p>
+      </div>
+      <div class="grid md:grid-cols-3 gap-6">
+        <div class="bg-slate-800 rounded-2xl p-6 border border-slate-700">
+          <div class="w-10 h-10 bg-amber-500 rounded-xl flex items-center justify-center mb-4">
+            <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+          </div>
+          <h3 class="font-bold text-lg mb-2">Admin</h3>
+          <p class="text-slate-400 text-sm mb-4">Full access to all modules, reports, staff management, and system settings.</p>
+          <ul class="text-slate-400 text-sm space-y-1">
+            <li class="flex gap-2"><span class="text-amber-400">✓</span> All modules</li>
+            <li class="flex gap-2"><span class="text-amber-400">✓</span> Delete records</li>
+            <li class="flex gap-2"><span class="text-amber-400">✓</span> Full reports</li>
+          </ul>
+        </div>
+        <div class="bg-slate-800 rounded-2xl p-6 border border-slate-700">
+          <div class="w-10 h-10 bg-blue-500 rounded-xl flex items-center justify-center mb-4">
+            <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg>
+          </div>
+          <h3 class="font-bold text-lg mb-2">Supervisor</h3>
+          <p class="text-slate-400 text-sm mb-4">Manages production batches, advances stages, and oversees workers on the floor.</p>
+          <ul class="text-slate-400 text-sm space-y-1">
+            <li class="flex gap-2"><span class="text-blue-400">✓</span> Production batches</li>
+            <li class="flex gap-2"><span class="text-blue-400">✓</span> Staff view</li>
+            <li class="flex gap-2"><span class="text-blue-400">✓</span> Reports</li>
+          </ul>
+        </div>
+        <div class="bg-slate-800 rounded-2xl p-6 border border-slate-700">
+          <div class="w-10 h-10 bg-emerald-500 rounded-xl flex items-center justify-center mb-4">
+            <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4"/></svg>
+          </div>
+          <h3 class="font-bold text-lg mb-2">Store Keeper</h3>
+          <p class="text-slate-400 text-sm mb-4">Focuses on raw materials — updating stock levels, tracking usage, and flagging low inventory.</p>
+          <ul class="text-slate-400 text-sm space-y-1">
+            <li class="flex gap-2"><span class="text-emerald-400">✓</span> Inventory only</li>
+            <li class="flex gap-2"><span class="text-emerald-400">✓</span> Stock alerts</li>
+            <li class="flex gap-2"><span class="text-emerald-400">✓</span> Dashboard</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="py-24 px-6 bg-amber-500">
+    <div class="max-w-2xl mx-auto text-center">
+      <h2 class="text-4xl font-extrabold text-white mb-4">Ready to Get Started?</h2>
+      <p class="text-amber-100 text-lg mb-8">Log in and start tracking your production today.</p>
+      <a routerLink="/login"
+        class="inline-block bg-white text-amber-600 font-bold px-10 py-4 rounded-xl text-lg hover:bg-amber-50 transition-colors shadow-xl">
+        Open the Dashboard →
+      </a>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="bg-slate-900 text-slate-500 py-8 px-6 text-center text-sm">
+    <div class="flex items-center justify-center gap-2 mb-2">
+      <div class="w-6 h-6 bg-amber-500 rounded flex items-center justify-center">
+        <svg class="w-3 h-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/>
+        </svg>
+      </div>
+      <span class="text-slate-300 font-semibold">ShoePro Manager</span>
+    </div>
+    <p>Shoe Production Management System &copy; {{ currentYear }}</p>
+  </footer>
+
+</div>

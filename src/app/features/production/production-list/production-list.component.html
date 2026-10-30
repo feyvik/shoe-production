@@ -5,7 +5,7 @@
       <p class="text-slate-500 text-sm">Track and manage shoe production</p>
     </div>
     @if (auth.currentUser()?.role !== 'storekeeper') {
-      <a routerLink="/production/new"
+      <a routerLink="/app/production/new"
         class="bg-amber-500 hover:bg-amber-600 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors">
         + New Batch
       </a>

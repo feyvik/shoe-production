@@ -35,7 +35,7 @@ export class AuthService {
   async signOut() {
     await this.supabase.client.auth.signOut();
     this.currentUser.set(null);
-    this.router.navigate(['/login']);
+    this.router.navigate(['/']);
   }
 
   private async loadProfile(userId: string) {

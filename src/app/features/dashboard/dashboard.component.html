@@ -4,7 +4,7 @@
       <h1 class="text-2xl font-bold text-slate-800">Dashboard</h1>
       <p class="text-slate-500 text-sm">Overview of production operations</p>
     </div>
-    <a routerLink="/production/new"
+    <a routerLink="/app/production/new"
       class="bg-amber-500 hover:bg-amber-600 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors">
       + New Batch
     </a>
@@ -32,7 +32,7 @@
       <div class="bg-white rounded-xl shadow-sm">
         <div class="flex items-center justify-between p-6 pb-4 border-b border-slate-100">
           <h2 class="font-semibold text-slate-800">Recent Production Batches</h2>
-          <a routerLink="/production" class="text-amber-500 text-sm hover:underline">View all</a>
+          <a routerLink="/app/production" class="text-amber-500 text-sm hover:underline">View all</a>
         </div>
         <div class="divide-y divide-slate-50">
           @if (recentBatches().length === 0) {
@@ -56,7 +56,7 @@
       <div class="bg-white rounded-xl shadow-sm">
         <div class="flex items-center justify-between p-6 pb-4 border-b border-slate-100">
           <h2 class="font-semibold text-slate-800">Low Stock Alerts</h2>
-          <a routerLink="/inventory" class="text-amber-500 text-sm hover:underline">Manage</a>
+          <a routerLink="/app/inventory" class="text-amber-500 text-sm hover:underline">Manage</a>
         </div>
         <div class="divide-y divide-slate-50">
           @if (lowStockItems().length === 0) {

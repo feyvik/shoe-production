@@ -26,7 +26,7 @@ export class LoginComponent {
     this.loading = true;
     try {
       await this.auth.signIn(this.email, this.password);
-      this.router.navigate(['/dashboard']);
+      this.router.navigate(['/app/dashboard']);
     } catch (e: any) {
       this.error = e.message || 'Login failed';
     } finally {

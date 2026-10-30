@@ -17,11 +17,11 @@ interface NavItem {
 })
 export class SidebarComponent {
   navItems: NavItem[] = [
-    { label: 'Dashboard', icon: 'grid', route: '/dashboard' },
-    { label: 'Production', icon: 'factory', route: '/production' },
-    { label: 'Inventory', icon: 'warehouse', route: '/inventory' },
-    { label: 'Staff', icon: 'users', route: '/staff', roles: ['admin', 'supervisor'] },
-    { label: 'Reports', icon: 'chart', route: '/reports' },
+    { label: 'Dashboard', icon: 'grid', route: '/app/dashboard' },
+    { label: 'Production', icon: 'factory', route: '/app/production' },
+    { label: 'Inventory', icon: 'warehouse', route: '/app/inventory' },
+    { label: 'Staff', icon: 'users', route: '/app/staff', roles: ['admin', 'supervisor'] },
+    { label: 'Reports', icon: 'chart', route: '/app/reports' },
   ];
 
   constructor(public auth: AuthService) {}
